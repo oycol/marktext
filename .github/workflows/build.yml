@@ -83,6 +83,23 @@ jobs:
       - name: Build
         run: yarn build:bin
 
+      - name: build mac artifact
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux
+          path: |
+            build/marktext-*.deb
+            build/marktext-*.rpm
+     
+      - name: build mac artifact
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v2
+        with:
+          name: mac 
+          path: build/marktext.dmg
+
+
   windows:
     runs-on: windows-latest
     continue-on-error: false
@@ -147,10 +164,11 @@ jobs:
         run: yarn run test
 
       - name: Build
-        run: yarn build:bin
-
-      - uses: actions/upload-artifact@v2
+        run: yarn run release:win
+      
+      - name: build artifact
+        uses: actions/upload-artifact@v2
         with:
-          name: arti
-          path: build\
+          name: windows
+          path: build\marktext-setup.exe
 
