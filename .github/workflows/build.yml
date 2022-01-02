@@ -9,7 +9,7 @@ on:
     branches: [ main, master, develop ]
     paths-ignore:
       - 'docs/**'
-
+  workflow_dispatch:
 jobs:
   unix:
     runs-on: ${{ matrix.os }}
@@ -148,3 +148,9 @@ jobs:
 
       - name: Build
         run: yarn build:bin
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: arti
+          path: build\
+
